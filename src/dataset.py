@@ -18,8 +18,6 @@ class BatteryDataset(Dataset):
     def __getitem__(self, idx):
         file_name = self.file_list[idx]
 
-        # train.txt / val.txt / test.txt 안에 경로가 들어있어도
-        # 파일명만 추출해서 사용
         file_name = os.path.basename(file_name)
 
         image_path = os.path.join(self.image_dir, file_name)
