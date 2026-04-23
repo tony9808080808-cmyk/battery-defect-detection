@@ -1,0 +1,14 @@
+===== 클래스별 평균 성능 =====
+Background
+  Mean IoU : 0.9750
+  Mean Dice: 0.9871
+Damaged
+  Mean IoU : 0.0314
+  Mean Dice: 0.0421
+Pollution
+  Mean IoU : 0.0824
+  Mean Dice: 0.1348
+
+===== 전체 평균 성능 =====
+Mean IoU : 0.3629
+Mean Dice: 0.3880
