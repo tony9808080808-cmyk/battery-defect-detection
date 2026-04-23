@@ -57,22 +57,18 @@ def clip_polygon_to_image(polygon: np.ndarray, width: int, height: int):
 
 
 def json_to_mask(json_path: Path, image_path: Path, save_path: Path):
-    # JSON 로드
     data = load_json(json_path)
 
-    # 이미지 로드
     image = cv2.imread(str(image_path))
     if image is None:
         raise FileNotFoundError(f"이미지를 읽을 수 없습니다: {image_path}")
 
     height, width = image.shape[:2]
 
-    # 빈 마스크 생성
     mask = np.zeros((height, width), dtype=np.uint8)
 
     defects = extract_defects(data)
 
-    # 결함이 없는 경우도 정상 처리
     if len(defects) == 0:
         save_path.parent.mkdir(parents=True, exist_ok=True)
         cv2.imwrite(str(save_path), mask)
@@ -100,15 +96,12 @@ def json_to_mask(json_path: Path, image_path: Path, save_path: Path):
         polygon = clip_polygon_to_image(polygon, width, height)
         class_value = CLASS_MAP[label_name]
 
-        # 시각화 가능한 값으로 채우기
         cv2.fillPoly(mask, [polygon], class_value)
         defect_count += 1
 
-    # 클래스별 픽셀 수 계산
     class_pixels["Damaged"] = int((mask == 127).sum())
     class_pixels["Pollution"] = int((mask == 255).sum())
 
-    # 저장
     save_path.parent.mkdir(parents=True, exist_ok=True)
     cv2.imwrite(str(save_path), mask)
 
